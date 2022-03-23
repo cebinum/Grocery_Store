@@ -50,6 +50,7 @@ class ProductController extends Controller
      */
     public function show(ProductRepository $repository, $slug)
     {
+        // dd($slug);
         $product = $repository->publishedProducts()->where('slug', $slug)->first();
 
         if (!$product) {

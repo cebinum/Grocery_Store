@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-xl-between">
             <div class="col-xl-12">
                 <div class="copyright text-center text-muted">
-                    &copy; {{ date('Y')}} <span class="font-weight-bold">Administrator | {{ env('APP_NAME') }}</span>
+                    &copy; {{ date('Y')}} <span class="font-weight-bold"> {{ env('APP_NAME') }}</span>
                 </div>
             </div>
         </div>

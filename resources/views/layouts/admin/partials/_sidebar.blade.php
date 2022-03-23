@@ -3,7 +3,6 @@
         <div class="sidenav-header d-flex align-items-center">
             <a class="navbar-brand" href="{{url('dashboard')}}">
                 <img src="{{ asset('argon/img/logo.png') }}" class="navbar-brand-img" alt="...">
-                {{-- Administrator --}}
             </a>
 
         </div>

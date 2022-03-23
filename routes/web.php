@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\WelcomeController');
 
 Auth::routes();
 
@@ -24,19 +22,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('dashboard', 'HomeController@index')->name('dashboard');
 
-    Route::post('/pay', 'RaveController@initialize')->name('pay');
-
-    Route::get('/pay', 'RaveController@goBack');
-
-    Route::get('/rave/callback', 'RaveController@callback')->name('callback');
-
-    Route::get('checkout', 'CheckoutController@index')->name('checkout');
+    Route::get('checkout', 'App\Http\Controllers\CheckoutController@index')->name('checkout');
 
     Route::get('settings', 'Admin\UserController@settings')->name('settings');
 
     Route::post('update-account', 'Admin\UserController@update')->name('update-account');
 
     Route::get('order/{order}', 'HomeController@order')->name('order');
+
 
     Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'App\Http\Controllers\Admin'], function () {
 
@@ -57,3 +50,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('delivered/{order}', 'OrderController@delivered')->name('delivered');
     });
 });
+
+Route::group(['prefix' => 'cart', 'namespace' => 'App\Http\Controllers'], function () {
+    Route::post('/', 'CartController@addToCart')->name('cart.add');
+
+    Route::get('/', 'CartController@myCart')->name('my-basket');
+
+    Route::get('empty', 'CartController@empty')->name('clear-cart');
+
+    Route::get('{id}/remove', 'CartController@removeItem')->name('checkout.cart.remove');
+});
+
+Route::get('/product/{slug}', 'App\Http\Controllers\Admin\ProductController@show')->name('show-product');

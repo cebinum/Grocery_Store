@@ -32,7 +32,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->saveOrFail();
 
-        flash('Category added');
+        toastr()->info('Category added');
 
         return redirect()->back();
     }
@@ -47,7 +47,7 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        flash('Category deleted');
+        toastr()->info('Category deleted');
 
         return redirect()->back();
     }
@@ -57,7 +57,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->saveOrFail();
 
-        flash('Category updated')->success();
+        toastr()->info('Category updated')->success();
 
         return redirect()->back();
     }

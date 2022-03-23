@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use phpDocumentor\Reflection\Types\This;
 
 class Product extends Model
 {
@@ -33,7 +34,7 @@ class Product extends Model
 
     public function getActualPriceAttribute()
     {
-        return number_format((float) $this->unit_and_price['price'], 2);
+        return number_format((float) $this->unit_and_price['price'], 2, '.', '');
     }
 
     public function scopeIsPublished($query)

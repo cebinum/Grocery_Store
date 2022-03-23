@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 <div class="container">
@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    hello, {{ auth()->user()->name }},  you are welcome to your dashboard.
+                    <p>Your ordered items will be displayed here</p>
                 </div>
             </div>
         </div>
