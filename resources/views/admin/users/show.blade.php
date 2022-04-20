@@ -49,24 +49,24 @@
                                         <td class="text-center">{{ $loop->iteration}}</td>
                                         <td class="text-success"><b>{{$order->order_number }}</b></td>
                                         <td class="text-center">{{$order->orderItems->count() }}</td>
-                                        <td>GHS {{ number_format($order->grand_total,2) }}</td>
+                                        <td>${{ number_format($order->grand_total,2) }}</td>
                                         <td>
                                             @switch($order->status)
-                                                @case(\App\Order::ORDER_RECEIVED)
-                                                    <span class="text-info">Order Received</span>
-                                                    @break
-                                                @case(\App\Order::ORDER_IN_PROCESS)
-                                                    <span class="">Order In Process</span>
-                                                    @break
-                                                @case(\App\Order::DELIVERY_IN_PROGRESS)
-                                                    <span class="text-primary">Delivery In progress</span>
-                                                    @break
-                                                @case(\App\Order::PACKAGE_DELIVERED)
-                                                    <span class="text-success">Package Delivered</span>
-                                                    @break
-                                                @default
-                                                <span class="text-danger">Pending</span>
-                                            @endswitch
+                                                    @case(\App\Models\Order::ORDER_RECEIVED)
+                                                        <span class="text-info">Order Received</span>
+                                                        @break
+                                                    @case(\App\Models\Order::ORDER_IN_PROCESS)
+                                                        <span class="">Order In Process</span>
+                                                        @break
+                                                    @case(\App\Models\Order::DELIVERY_IN_PROGRESS)
+                                                        <span class="text-primary">Delivery In progress</span>
+                                                        @break
+                                                    @case(\App\Models\Order::PACKAGE_DELIVERED)
+                                                        <span class="text-success">Package Delivered</span>
+                                                        @break
+                                                    @default
+                                                    <span class="text-danger">Pending</span>
+                                                @endswitch
                                         </td>
                                         <td>{{$order->date }}</td>
                                         <td class="text-center">

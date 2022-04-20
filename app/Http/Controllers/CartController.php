@@ -17,7 +17,7 @@ class CartController extends Controller
             'quantity' => $request->quantity,
         ));
 
-        flash($request->name . ' has been added to your basket')->success();
+        toastr()->success($request->name . ' has been added to cart');
 
         return redirect()->back();
     }
@@ -32,7 +32,7 @@ class CartController extends Controller
     {
         \Cart::remove($id);
 
-        flash(' Item removed form basket')->success();
+        toastr()->info('Item removed from cart');
 
         return redirect()->back();
     }
@@ -41,7 +41,7 @@ class CartController extends Controller
     {
         \Cart::clear();
 
-        flash('Your basket has been cleared')->success();
+        toastr()->success('Your cart has been cleared ');
 
         return redirect()->back();
     }

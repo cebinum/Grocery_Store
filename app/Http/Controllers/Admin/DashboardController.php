@@ -12,9 +12,8 @@ class DashboardController extends Controller
     {
         $products = $repository->publishedProducts();
         $orders = Order::isPending()->latest()->get();
-        $users = User::isNotMe()->latest()->get();
+        $users = User::latest()->get();
         $orderItems = OrderItem::get()->take(20);
-        // dd($orderItems);
         return view('admin.dashboard.index', compact('products', 'orders', 'users', 'orderItems'));
     }
 }

@@ -29,7 +29,7 @@ class Product extends Model
 
     public function getTitleAttribute()
     {
-        return $this->name . ' ' . $this->unit_and_price['unit'];
+        return $this->name;
     }
 
     public function getActualPriceAttribute()

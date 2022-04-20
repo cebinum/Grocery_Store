@@ -15,17 +15,19 @@
     <link rel="stylesheet" href="{{ asset('argon/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css')}}">
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     @yield('styles')
+    @toastr_css
 </head>
 <body>
     <div class="main-content" id="panel">
-        <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-white border-bottom">
-            <div class="container">
+        <div class="container-fluid">
+            <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-white border-bottom">
                 <a class="navbar-b" href="{{ url('/') }}">
                     <img src="{{ asset('argon/img/logo.png') }}" class="navbar-brand-img" height="40" alt="logo">
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav align-items-center ml-md-auto">
                         <li class="nav-item d-xl-none">
+                            {{-- item hteld --}}
                         </li>
 
                         <li class="nav-item d-sm-none">
@@ -35,6 +37,12 @@
                         </li>
                     </ul>
 
+                    <ul class="navbar-nav mr-auto  text-dark">
+                        <li class="nav-item active">
+                            <a class="nav-link  text-dark" href="{{ url('/') }}">Products <span class="sr-only">(current)</span></a>
+                        </li>
+                        <x-categories/>
+                    </ul>
                     <ul class="navbar-nav align-items-center ml-auto ml-md-0 text-dark">
                         @guest
                             @if (Route::has('login'))
@@ -52,7 +60,7 @@
                             <li class="nav-item dropdown mr-2">
                                 <a class="btn btn-secondary btn-sm position-relative" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-white">
                                         {{ count(\Cart::getContent()) }}
                                     </span>
                                 </a>
@@ -90,7 +98,7 @@
                                             </div>
                                         </a>
                                         @endforeach
-                                        <a href="{{ route('checkout') }}" class="dropdown-item text-center text-primary font-weight-bold py-3">Checkout</a>
+                                        <a href="{{ route('checkout') }}" class="dropdown-item text-center text-primary font-weight-bold py-3">View Cart</a>
                                     @endif
                                 </div>
                             </li>
@@ -99,7 +107,7 @@
                                 <a class="nav-link text-dark pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="media align-items-center">
                                         <span class="avatar avatar-sm rounded-circle">
-                                            <img alt="Image placeholder" src="{{ asset('argon/img/user-male-icon.png')}}">
+                                            <img alt="Image placeholder" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}">
                                         </span>
                                         <div class="media-body ml-2 d-none d-lg-block">
                                             <span class="mb-0 text-sm  font-weight-bold">{{ Auth::user()->name }}</span>
@@ -111,10 +119,26 @@
                                     <div class="dropdown-header noti-title">
                                         <h6 class="text-overflow m-0">Welcome!</h6>
                                     </div>
-                                    <a href="#!" class="dropdown-item">
+                                    <a href="{{ route('home') }}" class="dropdown-item">
                                         <i class="ni ni-single-02"></i>
-                                        <span>My profile</span>
+                                        <span>My Dashboard</span>
                                     </a>
+                                    <a href="{{ route('profile') }}" class="dropdown-item">
+                                        <i class="ni ni-single-02"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ route('reminders') }}" class="dropdown-item">
+                                        <i class="fa fa-bell"></i>
+                                        <span>Purchase Reminders</span>
+                                    </a>
+                                    @if (auth()->user()->role == 'admin')
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
+                                        <i class="ni ni-app"></i>
+                                        <span>Admin Dashboard</span>
+                                    </a>
+                                    @endif
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -129,9 +153,13 @@
                             </li>
                         @endauth
                     </ul>
+                    <form class="form-inline ml-4 my-2 my-lg-0" action="{{ url('/') }}" autocomplete="off">
+                        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" autocomplete="off" aria-label="Search">
+                        <button class="btn btn-warning my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
 
 
         <div class="container-fluid mt-6">
@@ -161,5 +189,7 @@
     <script src="{{ asset('argon/vendor/datatables.net-select/js/dataTables.select.min.js')}}"></script>
     <script src="{{ asset('argon/js/argon.js?v=1.1.0')}}"></script>
     @yield('scripts')
+    @toastr_js
+    @toastr_render
 </body>
 </html>

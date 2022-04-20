@@ -137,7 +137,7 @@
                                         <td class="text-success"><b>{{$order->order_number }}</b></td>
                                         <td>{{$order->user->name }}</td>
                                         <td class="text-center">{{$order->orderItems->count() }}</td>
-                                        <td>GHS {{ number_format($order->grand_total,2) }}</td>
+                                        <td>${{ number_format($order->grand_total,2) }}</td>
                                         <td>{{$order->date }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('orders.show', $order->id) }}" class="btn btn-success">

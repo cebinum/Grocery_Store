@@ -1,7 +1,7 @@
 <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
         <div class="sidenav-header d-flex align-items-center">
-            <a class="navbar-brand" href="{{url('dashboard')}}">
+            <a class="navbar-brand" href="{{url('home')}}">
                 <img src="{{ asset('argon/img/logo.png') }}" class="navbar-brand-img" alt="...">
             </a>
 

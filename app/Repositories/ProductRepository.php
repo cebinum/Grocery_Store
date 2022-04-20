@@ -32,6 +32,6 @@ class ProductRepository
     {
         return $this->publishedProducts()
             ->where('id', '!=', $product->id)
-            ->where('category_id', $product->category_id)->take(4);
+            ->where('category_id','=', $product->category_id)->take(4);
     }
 }

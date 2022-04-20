@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $query->where('email', '!=', 'atuwostephen8@gmail.com');
     }
+
+    public function purchaseReminder()
+    {
+        return $this->hasMany(PurchaseReminder::class, 'user_id');
+    }
 }

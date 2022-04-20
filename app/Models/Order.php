@@ -9,7 +9,7 @@ class Order extends Model
     //order states
     const PENDING = 'pending';
     const COMPLETED = 'completed';
-    const ORDER_RECEIVED = 'order_received';
+    const ORDER_RECEIVED = 'received';
     const ORDER_IN_PROCESS = 'order_in_process';
     const DELIVERY_IN_PROGRESS = 'delivery_in_progress';
     const PACKAGE_DELIVERED = 'package_delivered';

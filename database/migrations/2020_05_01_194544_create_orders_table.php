@@ -17,15 +17,11 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('order_number')->unique();
             $table->integer('user_id');
-            $table->enum('status', ['received', 'order_in_process', 'delivery_in_progress', 'package_delivered'])->default('received');
+            $table->enum('status', ['pending', 'received', 'order_in_process', 'delivery_in_progress', 'package_delivered'])->default('pending');
             $table->decimal('grand_total', 20, 6);
             $table->decimal('delivery_charges', 20, 6);
             $table->boolean('payment_status')->default(0);
-            $table->text('region');
-            $table->text('location');
-            $table->string('city');
-            $table->string('postal_address');
-            $table->string('phone_number');
+            $table->string('mode_of_delivery')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

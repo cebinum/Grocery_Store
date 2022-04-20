@@ -57,7 +57,7 @@ class ProductController extends Controller
             abort(404);
         }
 
-        $relatedProducts = $repository->relatedProducts($product);
+        $relatedProducts = $repository->relatedProducts($product)->shuffle();
 
         return view('product-details', compact('product', 'relatedProducts'));
     }

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
-use App\Events\OrderStatus;
-use Illuminate\Http\Request;
+use App\Notifications\OrderUpdate;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -38,7 +37,7 @@ class OrderController extends Controller
 
         flash('Order Status updated')->success();
 
-        event(new OrderStatus($order));
+         $order->user->notify(new OrderUpdate($order));
 
         return redirect()->back();
     }
@@ -50,7 +49,7 @@ class OrderController extends Controller
 
         flash('Order Status updated')->success();
 
-        event(new OrderStatus($order));
+         $order->user->notify(new OrderUpdate($order));
 
         return redirect()->back();
     }
@@ -62,7 +61,7 @@ class OrderController extends Controller
 
         flash('Order Status updated')->success();
 
-        event(new OrderStatus($order));
+         $order->user->notify(new OrderUpdate($order));
 
         return redirect()->back();
     }
@@ -74,7 +73,7 @@ class OrderController extends Controller
 
         flash('Order Status updated')->success();
 
-        event(new OrderStatus($order));
+         $order->user->notify(new OrderUpdate($order));
 
         return redirect()->back();
     }
