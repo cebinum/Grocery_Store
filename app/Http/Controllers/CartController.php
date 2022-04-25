@@ -37,5 +37,12 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    
+    public function empty()
+    {
+        \Cart::clear();
+
+        toastr()->success('Your cart has been cleared ');
+
+        return redirect()->back();
+    }
 }
