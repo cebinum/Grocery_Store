@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile', 'App\Http\Controllers\HomeController@profile')->name('profile');
 
+    Route::post('/product/{slug}/review', 'App\Http\Controllers\Admin\ProductController@review')->name('review-product');
+
     Route::get('reminders', 'App\Http\Controllers\HomeController@reminders')->name('reminders');
 
     Route::post('reminders', 'App\Http\Controllers\HomeController@storeReminders')->name('reminders.store');
@@ -55,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/order/create', [\App\Http\Controllers\Front\PaypalPaymentController::class, 'create']);
         Route::post('/order/capture/', [\App\Http\Controllers\Front\PaypalPaymentController::class, 'capture']);
     });
+
 
     Route::get('handle-payment', 'App\Http\Controllers\PayPalPaymentController@handlePayment')->name('make.payment');
     Route::get('cancel-payment', 'App\Http\Controllers\PayPalPaymentController@paymentCancel')->name('cancel.payment');

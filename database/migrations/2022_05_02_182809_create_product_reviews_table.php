@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchaseRemindersTable extends Migration
+class CreateProductReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreatePurchaseRemindersTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_reminders', function (Blueprint $table) {
+        Schema::create('product_reviews', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id');
             $table->bigInteger('user_id');
-            $table->date('reminder_date');
-            $table->time('reminder_time');
-            $table->integer('status')->default(0);
+            $table->integer('rate');
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreatePurchaseRemindersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_reminders');
+        Schema::dropIfExists('product_reviews');
     }
 }

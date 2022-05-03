@@ -50,4 +50,17 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class, 'product_id', 'id')->latest();
+    }
+
+    public function getRateAttribute()
+    {
+        if($this->reviews()->count()){
+            return number_format($this->reviews->sum('rate') / $this->reviews()->count(), 1);
+        }
+        return 0;
+    }
 }

@@ -141,6 +141,11 @@
                             <input type="text" name="name" required class="form-control" value="{{ old('name') }}">
                         </div>
 
+                        <div class="col-md-12 mb-3">
+                            <label>Product Quantity</label>
+                            <input type="text" name="quantity" required class="form-control" value="0">
+                        </div>
+
                         {{-- <div class="col-md-6 mb-3"> --}}
                             {{-- <label>Unit of Measurement</label> --}}
                             {{-- <span class="input-group-addon"> --}}

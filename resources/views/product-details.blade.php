@@ -1,5 +1,52 @@
 @extends('layouts.base')
 
+@section('styles')
+    <style>
+        .reviews-counter {
+    font-size: 13px;
+}
+.reviews-counter span {
+	vertical-align: -2px;
+}
+.rate {
+    float: left;
+    padding: 0 10px 0 0;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float: right;
+    width: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 21px;
+    color:#ccc;
+	margin-bottom: 0;
+	line-height: 21px;
+}
+.rate:not(:checked) > label:before {
+    content: '\2605';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+    </style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="card">
@@ -9,9 +56,13 @@
                     <img alt="{{ $product->title }}" src="{{ asset('product/'.$product->photo) }}" width="100%"> </a>
                 </div>
                 <div class="col-md-6">
-                    <h1 class="card-title mb-3">{{ $product->title }} </small></h1>
+                    <h1 class="card-title mb-3">{{ $product->title }} <small><i class="fa fa-star text-warning"></i> {{ $product->rate }}</small></h1>
                     <h2 class="card-title mb-3"><span> {{ $product->category->name }}</span></h2>
-                    <h1 class="card-title text-warning mb-3">{{ $product->price }}</h1><hr>
+                    <h1 class="card-title text-warning mb-3">{{ $product->price }}</h1>
+                    <span>Available Quantity: {{ $product->quantity }}</span>
+                    <hr>
+
+                    @if ($product->quantity)
 
                     <form action="{{ route('cart.add') }}" method="post">
                         @csrf
@@ -39,17 +90,70 @@
                             </div>
                         </div>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="card">
+        <div class="card-body">
+        <h1 class="text-center text-uppercase mb-5"><b><u>Reviews ({{ $product->reviews()->count() }})</u></b></h1>
+        @if ($product->reviews()->count())
+        <div class="row">
+            @foreach ($product->reviews as $review)
+                <div class="col-md-12">
+                    <div class="media align-items-center">
+                        <span class="avatar avatar-sm rounded-circle">
+                            <img alt="Image placeholder" src="https://ui-avatars.com/api/?name={{ urlencode($review->user->name) }}">
+                        </span>
+                        <div class="media-body ml-2 d-none d-lg-block">
+                            <span class="mb-0 text-sm  font-weight-bold">{{$review->user->name }} - {{ $review->rate }} <i class="fa fa-star text-warning"></i> <br><small>{{ $review->created_at->diffForHumans() }}</small></span>
+                            <p>{{ $review->message }}</p>
+                        </div>
+                    </div><hr>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
+            @auth
+            <form class="review-form mt-5" action="{{ route('review-product', $product->slug) }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label>Your rating</label>
+                    <div class="reviews-counter">
+                        <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Your review</label>
+                    <textarea class="form-control" rows="4" name="message" required></textarea>
+                </div>
+
+                <button class="btn btn-warning">Submit Review</button>
+            </form>
+            @endauth
+        </div>
+    </div>
+
     <div class="card p-3">
-        
+
         <h1 class="text-center text-uppercase mb-5"><b><u>Related Products</u></b></h1>
          <div class="row">
             @foreach ($relatedProducts->take(3) as $product)
-                <div class="item col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                <div class="item col-lg-4 col-md-3 col-sm-4 col-xs-6">
                     <div class="item-inner border">
                         <div class="item-img text-center">
                             <div class="item-img-info">
@@ -164,8 +268,7 @@ $(".input-number").keydown(function (e) {
         }
         // Ensure that it is a number and stop the keypress
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-         //   e.preventDefault(); this is to prevent the default button behavior
-         e.preventDefault();
+            e.preventDefault();
         }
     });
 </script>

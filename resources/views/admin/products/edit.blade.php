@@ -47,6 +47,11 @@
                                 <input type="text" name="name" required class="form-control" value="{{ $product->name }}">
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <label>Product Quantity</label>
+                                <input type="text" name="quantity" required class="form-control" value="{{ $product->quantity }}">
+                            </div>
+
                             {{-- <div class="col-md-6 mb-3"> --}}
                             {{-- <label>Unit of Measurement</label> --}}
                             {{-- <span class="input-group-addon"> --}}

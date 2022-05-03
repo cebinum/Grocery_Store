@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\ProductReview;
 use App\Repositories\ProductRepository;
 
 class ProductController extends Controller
@@ -57,7 +59,7 @@ class ProductController extends Controller
             abort(404);
         }
 
-        $relatedProducts = $repository->relatedProducts($product)->shuffle();
+        $relatedProducts = $repository->relatedProducts($product);
 
         return view('product-details', compact('product', 'relatedProducts'));
     }
@@ -139,9 +141,30 @@ class ProductController extends Controller
     {
         $product->category_id = $request->category;
         $product->name = $request->name;
+        $product->quantity = $request->quantity;
         $product->slug = Str::slug($request->name . ' ' . $request->product['unit']);
         $product->unit_and_price = $request->product;
         $product->photo = $fileNameToStore;
         $product->saveOrFail();
+    }
+
+    public function review(Request $request, $slug, ProductRepository $productRepository)
+    {
+        $product = $productRepository->publishedProducts()->where('slug', $slug)->first();
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $productReview = new ProductReview();
+        $productReview->product_id = $product->id;
+        $productReview->user_id = auth()->id();
+        $productReview->rate = $request->rate;
+        $productReview->message = $request->message;
+        $productReview->saveOrFail();
+
+        toastr()->success('Review Submitted');
+
+        return redirect()->back();
     }
 }
