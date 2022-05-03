@@ -164,7 +164,8 @@ $(".input-number").keydown(function (e) {
         }
         // Ensure that it is a number and stop the keypress
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
+         //   e.preventDefault(); this is to prevent the default button behavior
+         e.preventDefault();
         }
     });
 </script>
