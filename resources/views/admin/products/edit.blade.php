@@ -60,7 +60,8 @@
                         {{-- </div> --}}
 
                         <div class="col-md-12 mb-3">
-                            <label>Price(USD)</label>
+                           <!-- <label>Price(USD)</label>-->
+                           <label>Price(USD)</label>
                             <input type="text" class="form-control" required name="product[price]" value="{{ $product->unit_and_price['price'] }}">
                         </div>
 
