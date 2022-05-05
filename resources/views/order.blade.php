@@ -46,8 +46,11 @@
                                 </div>
                                 <div class="col-12 col-md-3 hidden-sm-down">
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#purchaseReminder{{ $loop->iteration }}">
-                                        <i class="fa fa-bell"></i> Set Reminder
+                                        <i class="fa fa-bell"></i> Reminder
                                     </button>
+                                    @if ($order->status == \App\Models\Order::PACKAGE_DELIVERED)
+                                    <a href="{{ route('show-product', $orderItems->product->slug ) }}" class="btn btn-secondary mt-2"><i class="fa fa-star"></i> Review</a>
+                                    @endif
 
                                         <div class="modal fade" id="purchaseReminder{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="purchaseReminder{{ $loop->iteration }}Label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -168,7 +171,7 @@
 
                                     <input type="hidden" name="amount" value="{{ $order->grand_total * 100}}">
 
-                                    <input type="hidden" name="currency" value="GHS">
+                                    <input type="hidden" name="currency" value="NGN">
 
                                     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
                                     {{ csrf_field() }}
